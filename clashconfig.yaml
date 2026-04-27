@@ -1,6 +1,4 @@
-#Clash 配置模板 仅用于技术研究，请勿用于违规用途  Clash 配置模板
-#Clash 配置模板 仅用于技术研究，请勿用于违规用途  Clash 配置模板
-#Clash 配置模板 仅用于技术研究，请勿用于违规用途  Clash 配置模板
+#Clash 配置模板 仅用于技术研究，请勿用于违规用途
 mixed-port: 7890
 redir-port: 7891
 tproxy-port: 7895
@@ -26,7 +24,6 @@ geox-url:
 profile:
   store-selected: true
   store-fake-ip: true
-
 dns:
   enable: true
   ipv6: false
@@ -86,7 +83,6 @@ dns:
     "geosite:geolocation-!cn": [1.1.1.1, 8.8.8.8, 9.9.9.9]
     "+.ipleak.net": [1.1.1.1, 8.8.8.8, 9.9.9.9]
     "+.dnsleaktest.com": [1.1.1.1, 8.8.8.8, 9.9.9.9]
-
 tun:
   enable: true
   stack: system
@@ -96,7 +92,6 @@ tun:
     - tcp://any:53
   endpoint-independent-nat: true
   auto-route: true
-
 sniffer:
   enable: true
   override-destination: true
@@ -135,55 +130,53 @@ sniffer:
     - "+.tenpay.com"
     - "+.bankcomm.com"
     - "+.icbc.com.cn"
-
 proxies:
   {{proxies}}
-
 proxy-groups:
-  - name: 🚀 节点选择
+  - name: 节点选择
     type: select
     proxies:
       - 自动选择
       - DIRECT
-      - 📋 全部CF节点
-  - name: 📋 全部CF节点
+      - 全部CF节点
+  - name: 全部CF节点
     type: select
     proxies:
       {{all_proxies}}
   - name: 自动选择
     type: url-test
-    url: https://www.youtube.com/generate_204
+    url: http://www.gstatic.com/generate_204
     interval: 600
     tolerance: 50
     proxies:
       {{all_proxies}}
-  - name: 🚫 广告拦截
+  - name: 广告拦截
     type: select
     proxies:
       - REJECT
       - DIRECT
-  - name: 📱 海外APP专项
+  - name: 海外APP专项
     type: select
     proxies:
       - 自动选择
-      - 🚀 节点选择
+      - 节点选择
 rules:
   - DOMAIN-KEYWORD,stun,REJECT
   - DOMAIN-KEYWORD,turn,REJECT
   - DOMAIN-SUFFIX,stun.l.google.com,REJECT
   - DOMAIN-SUFFIX,stun.services.mozilla.com,REJECT
   - DOMAIN-SUFFIX,stun.voip.blackberry.com,REJECT
-  - GEOSITE,category-ads-all,🚫 广告拦截
-  - GEOSITE,google,📱 海外APP专项
-  - GEOIP,google,📱 海外APP专项
-  - GEOSITE,youtube,📱 海外APP专项
-  - GEOSITE,twitter,📱 海外APP专项
-  - GEOIP,twitter,📱 海外APP专项
-  - GEOSITE,instagram,📱 海外APP专项
-  - GEOIP,facebook,📱 海外APP专项
-  - GEOSITE,tiktok,📱 海外APP专项
-  - GEOSITE,telegram,📱 海外APP专项
-  - GEOIP,telegram,📱 海外APP专项
+  - GEOSITE,category-ads-all,广告拦截
+  - GEOSITE,google,海外APP专项
+  - GEOIP,google,海外APP专项
+  - GEOSITE,youtube,海外APP专项
+  - GEOSITE,twitter,海外APP专项
+  - GEOIP,twitter,海外APP专项
+  - GEOSITE,instagram,海外APP专项
+  - GEOIP,facebook,海外APP专项
+  - GEOSITE,tiktok,海外APP专项
+  - GEOSITE,telegram,海外APP专项
+  - GEOIP,telegram,海外APP专项
   - GEOSITE,cn,DIRECT
   - GEOIP,CN,DIRECT
-  - MATCH,📱 海外APP专项
+  - MATCH,海外APP专项
