@@ -144,7 +144,6 @@ proxy-groups:
     type: select
     proxies:
       - 自动选择
-      - 🔮 负载均衡
       - DIRECT
       - 📋 全部CF节点
   - name: 📋 全部CF节点
@@ -168,8 +167,6 @@ proxy-groups:
     proxies:
       - 自动选择
       - 🚀 节点选择
-      - 🔮 负载均衡
-
 rules:
   - DOMAIN-KEYWORD,stun,REJECT
   - DOMAIN-KEYWORD,turn,REJECT
