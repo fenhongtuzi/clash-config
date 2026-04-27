@@ -142,14 +142,14 @@ proxy-groups:
   - name: 全部CF节点
     type: select
     proxies:
-      {{all_proxies}}
+      {{all_node_names}}
   - name: 自动选择
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 600
     tolerance: 50
     proxies:
-      {{all_proxies}}
+      {{all_node_names}}
   - name: 广告拦截
     type: select
     proxies:
