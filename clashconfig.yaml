@@ -1,0 +1,192 @@
+#Clash 配置模板 仅用于技术研究，请勿用于违规用途  Clash 配置模板
+#Clash 配置模板 仅用于技术研究，请勿用于违规用途  Clash 配置模板
+#Clash 配置模板 仅用于技术研究，请勿用于违规用途  Clash 配置模板
+mixed-port: 7890
+redir-port: 7891
+tproxy-port: 7895
+socks-port: 7891
+port: 7890
+udp: true
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: warning
+ipv6: false
+external-controller: 0.0.0.0:9090
+secret: ""
+unified-delay: true
+tcp-concurrent: true
+global-client-fingerprint: chrome
+geodata-mode: true
+geodata-loader: memconservative
+geox-url:
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+dns:
+  enable: true
+  ipv6: false
+  use-system-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "+.home.arpa"
+    - "*.msftncsi.com"
+    - "*.msftconnecttest.com"
+    - "connect.rom.miui.com"
+    - "localhost.ptlogin2.qq.com"
+    - "+.huawei.com"
+    - "+.hwcdn.cn"
+    - "+.hicloud.com"
+    - "+.vmall.com"
+    - "+.hispace.com"
+    - "+.push.apple.com"
+    - "+.icloud.com"
+    - "+.ipleak.net"
+    - "dns.google"
+    - "cloudflare-dns.com"
+  listen: 0.0.0.0:53
+  respect-rules: true
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  fallback:
+    - 1.1.1.1
+    - 8.8.8.8
+    - 9.9.9.9
+    - 149.112.112.112
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+      - 10.0.0.0/8
+      - 100.64.0.0/10
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+      - 198.18.0.0/15
+  nameserver-policy:
+    "geosite:cn": [223.5.5.5, 119.29.29.29]
+    "+.cn": [223.5.5.5, 119.29.29.29]
+    "+.lan,+.local,+.home.arpa": [223.5.5.5]
+    "geosite:geolocation-!cn": [1.1.1.1, 8.8.8.8, 9.9.9.9]
+    "+.ipleak.net": [1.1.1.1, 8.8.8.8, 9.9.9.9]
+    "+.dnsleaktest.com": [1.1.1.1, 8.8.8.8, 9.9.9.9]
+
+tun:
+  enable: true
+  stack: system
+  device: utun
+  dns-hijack:
+    - udp://any:53
+    - tcp://any:53
+  endpoint-independent-nat: true
+  auto-route: true
+
+sniffer:
+  enable: true
+  override-destination: true
+  parse-pure-ip: true
+  sniff:
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+      override-destination: true
+  force-domain:
+    - "+.netflix.com"
+    - "+.nflxvideo.net"
+    - "+.amazonaws.com"
+    - "+.tiktok.com"
+    - "+.tiktokv.com"
+    - "+.ibytedtos.com"
+    - "+.instagram.com"
+    - "+.fbcdn.net"
+    - "+.telegram.org"
+  skip-domain:
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - "+.oray.com"
+    - "+.sunlogin.net"
+    - "+.huawei.com"
+    - "+.hicloud.com"
+    - "+.alipay.com"
+    - "+.tenpay.com"
+    - "+.bankcomm.com"
+    - "+.icbc.com.cn"
+
+proxies:
+  {{proxies}}
+
+proxy-groups:
+  - name: 🚀 节点选择
+    type: select
+    proxies:
+      - 自动选择
+      - 🔮 负载均衡
+      - DIRECT
+      - 📋 全部CF节点
+  - name: 📋 全部CF节点
+    type: select
+    proxies:
+      {{all_proxies}}
+  - name: 自动选择
+    type: url-test
+    url: https://www.youtube.com/generate_204
+    interval: 600
+    tolerance: 50
+    proxies:
+      {{all_proxies}}
+  - name: 🚫 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: 📱 海外APP专项
+    type: select
+    proxies:
+      - 自动选择
+      - 🚀 节点选择
+      - 🔮 负载均衡
+
+rules:
+  - DOMAIN-KEYWORD,stun,REJECT
+  - DOMAIN-KEYWORD,turn,REJECT
+  - DOMAIN-SUFFIX,stun.l.google.com,REJECT
+  - DOMAIN-SUFFIX,stun.services.mozilla.com,REJECT
+  - DOMAIN-SUFFIX,stun.voip.blackberry.com,REJECT
+  - GEOSITE,category-ads-all,🚫 广告拦截
+  - GEOSITE,google,📱 海外APP专项
+  - GEOIP,google,📱 海外APP专项
+  - GEOSITE,youtube,📱 海外APP专项
+  - GEOSITE,twitter,📱 海外APP专项
+  - GEOIP,twitter,📱 海外APP专项
+  - GEOSITE,instagram,📱 海外APP专项
+  - GEOIP,facebook,📱 海外APP专项
+  - GEOSITE,tiktok,📱 海外APP专项
+  - GEOSITE,telegram,📱 海外APP专项
+  - GEOIP,telegram,📱 海外APP专项
+  - GEOSITE,cn,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,📱 海外APP专项
